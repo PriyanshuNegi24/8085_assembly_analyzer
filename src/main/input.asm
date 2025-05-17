@@ -1,0 +1,3 @@
+MVI A, 05H
+ADD B
+HLT
