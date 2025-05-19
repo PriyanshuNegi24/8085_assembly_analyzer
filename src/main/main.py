@@ -1,30 +1,66 @@
+from analyze import extract_instructions
 
-import sys
-from antlr4 import *
-from generated.Assembly8085Lexer import Assembly8085Lexer
-from generated.Assembly8085Parser import Assembly8085Parser
-from generated.Assembly8085Listener import Assembly8085Listener
+# Simulated register file
+registers = {
+    'A': 0,
+    'B': 0,
+    'C': 0,
+    'D': 0,
+    'E': 0,
+    'H': 0,
+    'L': 0
+}
 
-class MyListener(Assembly8085Listener):
-    def enterInstruction(self, ctx):
-        print("Instruction:", ctx.getText())  # customize based on your grammar
+def parse_immediate(value):
+    """Convert immediate like 05H to integer."""
+    if value.endswith('H'):
+        return int(value[:-1], 16)
+    return int(value)
+
+def simulate_instruction(instr):
+    opcode = instr['opcode']
+    operands = instr['operands']
+
+    if opcode == 'MVI':
+        reg, value = operands
+        if reg in registers:
+            registers[reg] = parse_immediate(value)
+            print(f"{reg} <- {value} (now {registers[reg]})")
+        else:
+            print(f"Error: Unknown register {reg}")
+
+    elif opcode == 'ADD':
+        reg = operands[0]
+        if reg in registers:
+            registers['A'] = (registers['A'] + registers[reg]) & 0xFF
+            print(f"A <- A + {reg} = {registers['A']}")
+        else:
+            print(f"Error: Unknown register {reg}")
+
+    elif opcode == 'HLT':
+        print("Program halted.")
+        return False  # Stop execution
+
+    else:
+        print(f"Unknown instruction: {opcode}")
+    
+    return True
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python main.py <input_file.asm>")
-        return
+    instructions = extract_instructions("input.asm")
+    print("\n--- Parsed Instructions ---")
+    for i, instr in enumerate(instructions):
+        print(f"{i+1}: {instr}")
 
-    input_file = sys.argv[1]
-    input_stream = FileStream(input_file)
-    
-    lexer = Assembly8085Lexer(input_stream)
-    token_stream = CommonTokenStream(lexer)
-    parser = Assembly8085Parser(token_stream)
-    tree = parser.program()  # Replace 'program' with your grammar's start rule
+    print("\n--- Simulation ---")
+    for instr in instructions:
+        should_continue = simulate_instruction(instr)
+        if not should_continue:
+            break
 
-    listener = MyListener()
-    walker = ParseTreeWalker()
-    walker.walk(listener, tree)
+    print("\n--- Final Register State ---")
+    for reg, val in registers.items():
+        print(f"{reg}: {val:02X}")
 
 if __name__ == "__main__":
     main()

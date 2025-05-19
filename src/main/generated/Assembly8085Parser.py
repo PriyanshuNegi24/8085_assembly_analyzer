@@ -174,6 +174,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -241,6 +247,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLine" ):
                 listener.exitLine(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLine" ):
+                return visitor.visitLine(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -328,6 +340,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitLabel" ):
                 listener.exitLabel(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLabel" ):
+                return visitor.visitLabel(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -378,6 +396,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInstruction" ):
                 listener.exitInstruction(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstruction" ):
+                return visitor.visitInstruction(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -456,6 +480,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDirective" ):
                 listener.exitDirective(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDirective" ):
+                return visitor.visitDirective(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -548,6 +578,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitOpcode" ):
                 listener.exitOpcode(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOpcode" ):
+                return visitor.visitOpcode(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -607,6 +643,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitOperand" ):
                 listener.exitOperand(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOperand" ):
+                return visitor.visitOperand(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -701,6 +743,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitRegister" ):
                 listener.exitRegister(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRegister" ):
+                return visitor.visitRegister(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -748,6 +796,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitMemoryReference" ):
                 listener.exitMemoryReference(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMemoryReference" ):
+                return visitor.visitMemoryReference(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -789,6 +843,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitImmediate" ):
                 listener.exitImmediate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitImmediate" ):
+                return visitor.visitImmediate(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -839,6 +899,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLabel_reference" ):
                 listener.exitLabel_reference(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLabel_reference" ):
+                return visitor.visitLabel_reference(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -900,6 +966,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExpressionValue" ):
                 listener.exitExpressionValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpressionValue" ):
+                return visitor.visitExpressionValue(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -993,6 +1065,12 @@ class Assembly8085Parser ( Parser ):
             if hasattr( listener, "exitOperator" ):
                 listener.exitOperator(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOperator" ):
+                return visitor.visitOperator(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1039,6 +1117,12 @@ class Assembly8085Parser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitComment" ):
                 listener.exitComment(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitComment" ):
+                return visitor.visitComment(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
