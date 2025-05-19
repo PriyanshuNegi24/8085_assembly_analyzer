@@ -23,15 +23,15 @@ digraph G {
   node20 [label="B"];
   node21 [label=","];
   node22 [label="operand"];
-  node23 [label="immediate"];
-  node24 [label="expressionValue"];
-  node25 [label="02H"];
-  node26 [label="
+  node23 [label="
 "];
-  node27 [label="line"];
-  node28 [label="instruction"];
-  node29 [label="opcode"];
-  node30 [label="ADD"];
+  node24 [label="line"];
+  node25 [label="instruction"];
+  node26 [label="opcode"];
+  node27 [label="ADD"];
+  node28 [label="operand"];
+  node29 [label="register"];
+  node30 [label="B"];
   node31 [label="
 "];
   node32 [label="line"];
@@ -70,18 +70,18 @@ digraph G {
   node18 -> node19;
   node15 -> node18;
   node15 -> node21;
-  node24 -> node25;
-  node23 -> node24;
-  node22 -> node23;
   node15 -> node22;
   node14 -> node15;
-  node14 -> node26;
+  node14 -> node23;
   node0 -> node14;
+  node26 -> node27;
+  node25 -> node26;
   node29 -> node30;
   node28 -> node29;
-  node27 -> node28;
-  node27 -> node31;
-  node0 -> node27;
+  node25 -> node28;
+  node24 -> node25;
+  node24 -> node31;
+  node0 -> node24;
   node34 -> node35;
   node33 -> node34;
   node38 -> node39;
