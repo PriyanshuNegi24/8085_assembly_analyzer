@@ -1,4 +1,4 @@
-import sys
+# import sys
 import subprocess
 from antlr4 import *
 from generated.Assembly8085Lexer import Assembly8085Lexer
@@ -69,17 +69,17 @@ class SemanticAnalyzer(Assembly8085Visitor):
         operands = [child.getText() for child in ctx.operand()]
 
         expected_operands = {
-            'MOV': 2, 'MVI': 2, 'LXI': 2, 'LDA': 1, 'STA': 1, 'LHLD': 1, 'SHLD': 1,
-            'LDAX': 1, 'STAX': 1, 'XCHG': 0, 'ADD': 1, 'ADI': 1, 'ADC': 1, 'ACI': 1,
-            'SUB': 1, 'SUI': 1, 'SBB': 1, 'SBI': 1, 'INR': 1, 'DCR': 1, 'INX': 1,
-            'DCX': 1, 'DAD': 1, 'DAA': 0, 'ANA': 1, 'ANI': 1, 'XRA': 1, 'XRI': 1,
-            'ORA': 1, 'ORI': 1, 'CMP': 1, 'CPI': 1, 'CMA': 0, 'CMC': 0, 'STC': 0,
-            'JMP': 1, 'JC': 1, 'JNC': 1, 'JZ': 1, 'JNZ': 1, 'JP': 1, 'JM': 1,
-            'JPE': 1, 'JPO': 1, 'CALL': 1, 'CC': 1, 'CNC': 1, 'CZ': 1, 'CNZ': 1,
-            'CP': 1, 'CM': 1, 'CPE': 1, 'CPO': 1, 'RET': 0, 'RC': 0, 'RNC': 0,
-            'RZ': 0, 'RNZ': 0, 'RP': 0, 'RM': 0, 'RPE': 0, 'RPO': 0,
-            'PUSH': 1, 'POP': 1, 'XTHL': 0, 'SPHL': 0, 'PCHL': 0, 'IN': 1, 'OUT': 1,
-            'EI': 0, 'DI': 0, 'HLT': 0, 'NOP': 0, 'RIM': 0, 'SIM': 0
+            "MOV": 2, "MVI": 2, "LXI": 2, "LDA": 1, "STA": 1, "LHLD": 1, "SHLD": 1,
+            "LDAX": 1, "STAX": 1, "XCHG": 0, "ADD": 1, "ADI": 1, "ADC": 1, "ACI": 1,
+            "SUB": 1, "SUI": 1, "SBB": 1, "SBI": 1, "INR": 1, "DCR": 1, "INX": 1,
+            "DCX": 1, "DAD": 1, "DAA": 0, "ANA": 1, "ANI": 1, "XRA": 1, "XRI": 1,
+            "ORA": 1, "ORI": 1, "CMP": 1, "CPI": 1, "CMA": 0, "CMC": 0, "STC": 0,
+            "JMP": 1, "JC": 1, "JNC": 1, "JZ": 1, "JNZ": 1, "JP": 1, "JM": 1,
+            "JPE": 1, "JPO": 1, "CALL": 1, "CC": 1, "CNC": 1, "CZ": 1, "CNZ": 1,
+            "CP": 1, "CM": 1, "CPE": 1, "CPO": 1, "RET": 0, "RC": 0, "RNC": 0,
+            "RZ": 0, "RNZ": 0, "RP": 0, "RM": 0, "RPE": 0, "RPO": 0,
+            "PUSH": 1, "POP": 1, "XTHL": 0, "SPHL": 0, "PCHL": 0, "IN": 1, "OUT": 1,
+            "EI": 0, "DI": 0, "HLT": 0, "NOP": 0, "RIM": 0, "SIM": 0
         }
 
         if opcode in expected_operands:
