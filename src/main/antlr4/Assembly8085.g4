@@ -7,7 +7,7 @@ program
     ;
 
 line
-    : (label)? (instruction | directive)? comment? NEWLINE
+    : (label)? (instruction)? comment? NEWLINE
     | NEWLINE
     ;
 
@@ -19,13 +19,6 @@ instruction
     : opcode                         // No operand
     | opcode operand                 // One operand
     | opcode operand ',' operand     // Two operands
-    ;
-
-directive
-    : DIRECTIVE_ORG expressionValue
-    | DIRECTIVE_EQU expressionValue
-    | DIRECTIVE_DB expressionValue (',' expressionValue)*
-    | DIRECTIVE_DS expressionValue
     ;
 
 opcode
@@ -50,24 +43,11 @@ memoryReference
     ;
 
 immediate
-    : '#' ? expressionValue
+    : NUMBER
     ;
 
 label_reference
     : IDENTIFIER
-    ;
-
-expressionValue
-    : NUMBER
-    | CHARACTER
-    | STRING
-    | IDENTIFIER
-    | '(' expressionValue ')'
-    | expressionValue operator expressionValue
-    ;
-
-operator
-    : '+' | '-' | '*' | '/' | '&' | '|' | '^' | '<<' | '>>'
     ;
 
 comment
@@ -83,12 +63,6 @@ NEWLINE
 COMMENT
     : ';' ~[\r\n]*
     ;
-
-// Directives
-DIRECTIVE_ORG : ('ORG' | '.ORG' | 'org');
-DIRECTIVE_EQU : ('EQU' | '.EQU' | 'equ');
-DIRECTIVE_DB  : ('DB'  | '.DB'  | 'db');
-DIRECTIVE_DS  : ('DS'  | '.DS'  | 'ds');
 
 // Opcodes
 OPCODE_NOARG
@@ -132,10 +106,6 @@ NUMBER
 fragment HEX_NUM : [0-9A-Fa-f]+ [Hh];
 fragment BIN_NUM : [01]+ 'B';
 fragment DEC_NUM : [0-9]+;
-
-// Literals
-CHARACTER : '\'' ~['\r\n\\] '\'';
-STRING    : '"' ~["\r\n]* '"';
 
 // Identifiers
 IDENTIFIER : [A-Za-z_] [A-Za-z0-9_]*;

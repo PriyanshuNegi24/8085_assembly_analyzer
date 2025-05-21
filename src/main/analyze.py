@@ -1,4 +1,3 @@
-# import sys
 import subprocess
 from antlr4 import *
 from generated.Assembly8085Lexer import Assembly8085Lexer
@@ -57,16 +56,26 @@ class SemanticAnalyzer(Assembly8085Visitor):
         self.used_labels = []
         self.errors = []
 
-    def visitLabelDef(self, ctx):
-        label = ctx.IDENTIFIER().getText()
-        if label in self.labels:
-            self.errors.append(f"Duplicate label: {label}")
-        self.labels.add(label)
-        return self.visitChildren(ctx)
+    def visitProgram(self, ctx):
+        for line_ctx in ctx.line():
+            self.visit(line_ctx)
+        return
+
+    def visitLine(self, ctx):
+        # Collect label definitions
+        if ctx.label():
+            label = ctx.label().IDENTIFIER().getText()
+            if label in self.labels:
+                self.errors.append(f"Duplicate label: {label}")
+            self.labels.add(label)
+        # Check instructions for label usage
+        if ctx.instruction():
+            self.visit(ctx.instruction())
+        return
 
     def visitInstruction(self, ctx):
         opcode = ctx.opcode().getText().upper() if ctx.opcode() else "<missing>"
-        operands = [child.getText() for child in ctx.operand()]
+        operands = [op.getText() for op in ctx.operand()] if ctx.operand() else []
 
         expected_operands = {
             "MOV": 2, "MVI": 2, "LXI": 2, "LDA": 1, "STA": 1, "LHLD": 1, "SHLD": 1,
@@ -90,10 +99,11 @@ class SemanticAnalyzer(Assembly8085Visitor):
         else:
             self.errors.append(f"Line {ctx.start.line}: Unknown instruction '{opcode}'")
 
-        if opcode in {"JMP", "CALL"} and operands:
+        # If operand is a label reference, collect it
+        if opcode in {"JMP", "CALL", "JC", "JNC", "JZ", "JNZ", "JP", "JM", "JPE", "JPO", "CC", "CNC", "CZ", "CNZ", "CP", "CM", "CPE", "CPO"} and operands:
             self.used_labels.append(operands[0])
 
-        return self.visitChildren(ctx)
+        return
 
     def finalize(self):
         for lbl in self.used_labels:

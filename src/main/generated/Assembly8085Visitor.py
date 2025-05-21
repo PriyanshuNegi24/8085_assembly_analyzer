@@ -29,11 +29,6 @@ class Assembly8085Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by Assembly8085Parser#directive.
-    def visitDirective(self, ctx:Assembly8085Parser.DirectiveContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by Assembly8085Parser#opcode.
     def visitOpcode(self, ctx:Assembly8085Parser.OpcodeContext):
         return self.visitChildren(ctx)
@@ -61,16 +56,6 @@ class Assembly8085Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by Assembly8085Parser#label_reference.
     def visitLabel_reference(self, ctx:Assembly8085Parser.Label_referenceContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by Assembly8085Parser#expressionValue.
-    def visitExpressionValue(self, ctx:Assembly8085Parser.ExpressionValueContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by Assembly8085Parser#operator.
-    def visitOperator(self, ctx:Assembly8085Parser.OperatorContext):
         return self.visitChildren(ctx)
 
 
