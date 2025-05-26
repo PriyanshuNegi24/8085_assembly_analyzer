@@ -18,15 +18,29 @@ document.addEventListener("DOMContentLoaded", () => {
   async function compileCode() {
     const code = editor.value;
     try {
-      const writeInputFile = await window.electronAPI.saveFile(code + "\n") ;
-      const result = await window.electronAPI.runPython();
-      console.log("Compilation result:", result);
-      outputDiv.innerHTML = `<pre>${result}</pre>`;
-      if (!writeInputFile) {
-        throw new Error("Failed to compile file.");
+      const inputFilePath = await window.electronAPI.saveFile(code + "\n");
+      if (!inputFilePath) {
+        throw new Error("Failed to save input file.");
+      }
+
+      const result = await window.electronAPI.runPython(inputFilePath);
+
+      if (result.includes("No semantic errors")) {
+        outputDiv.innerHTML = `
+        <div class="log success">✔ [LOG] Compilation successful. No syntax errors found.</div>
+        <pre>${result}</pre>
+      `;
+      } else {
+        outputDiv.innerHTML = `
+        <div class="log error">✖ [ERROR] Compilation failed with semantic errors.</div>
+        <pre>${result}</pre>
+      `;
       }
     } catch (error) {
-      outputDiv.textContent = "Error during compilation.\n" + error.message;
+      outputDiv.innerHTML = `
+      <div class="log error">✖ [ERROR] SOMETHING WENT WRONG.</div>
+      <pre>Error during compilation.\n${error.message}<pre>
+      `;
     }
   }
 });
