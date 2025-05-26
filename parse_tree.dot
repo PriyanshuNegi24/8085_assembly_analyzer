@@ -1,0 +1,15 @@
+digraph G {
+  node0 [label="program"];
+  node1 [label="line"];
+  node2 [label="comment"];
+  node3 [label="; comment "];
+  node4 [label="
+
+"];
+  node5 [label="<EOF>"];
+  node2 -> node3;
+  node1 -> node2;
+  node1 -> node4;
+  node0 -> node1;
+  node0 -> node5;
+}
