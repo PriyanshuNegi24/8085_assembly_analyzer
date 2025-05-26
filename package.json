@@ -1,8 +1,8 @@
 {
-  "name": "recoveryx",
-  "productName": "recoveryx",
+  "name": "8085-CompilerBuddy",
+  "productName": "8085-CompilerBuddy",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A simple Electron app for compiling 8085 assembly code.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
