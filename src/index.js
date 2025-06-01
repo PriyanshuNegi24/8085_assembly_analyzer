@@ -33,7 +33,7 @@ ipcMain.handle("run-python-script", async (event, inputFilePath) => {
   const scriptPath = isDevelopment
     ? path.join(
         __dirname,
-        "src",
+        // "src",
         "8085_assembly_analyzer",
         "src",
         "main",
@@ -76,8 +76,9 @@ ipcMain.handle("run-python-script", async (event, inputFilePath) => {
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    show : false,
+    width: 1280,
+    height: 720,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -86,7 +87,8 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "index.html"));
-
+  mainWindow.maximize(); 
+  mainWindow.show();
   if (process.env.NODE_ENV === "development") {
     mainWindow.webContents.openDevTools();
   }

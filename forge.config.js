@@ -8,6 +8,11 @@ module.exports = {
       NODE_ENV: "production",
     },
     extraResource: ["./pbl", "./src/8085_assembly_analyzer"],
+    win32metadata: {
+      CompanyName: "Cyber Rescuers",
+      FileDescription: "Copmpiler for 8085 Assembly Language",
+      ProductName: "8085-Compiler Buddy",
+    },
   },
   rebuildConfig: {},
   makers: [

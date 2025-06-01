@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function compileCode() {
     const code = editor.value;
+    if (!code.trim()) {
+      outputDiv.innerHTML = `<div class="log warning"> ⚠ [WARN] Please enter some code to compile.</div>`;
+      return;
+    }
+    outputDiv.innerHTML = `<div class="log warning">ℹ [INFO] Compiling code...</div>`;
     try {
       const inputFilePath = await window.electronAPI.saveFile(code + "\n");
       if (!inputFilePath) {
