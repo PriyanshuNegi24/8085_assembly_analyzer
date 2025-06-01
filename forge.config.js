@@ -5,9 +5,9 @@ module.exports = {
   packagerConfig: {
     asar: true,
     env: {
-      NODE_ENV: "production",
+      NODE_ENV: "development",
     },
-    extraResource: ["./pbl", "./src/8085_assembly_analyzer"],
+    extraResources: ["./pbl", "./src/8085_assembly_analyzer, ./dist/analyze.exe"],
     win32metadata: {
       CompanyName: "Cyber Rescuers",
       FileDescription: "Copmpiler for 8085 Assembly Language",

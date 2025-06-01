@@ -25,58 +25,44 @@ ipcMain.handle("save-file", async (event, code) => {
 });
 
 ipcMain.handle("run-python-script", async (event, inputFilePath) => {
-  const pythonExecutable =
-    process.env.NODE_ENV === "development"
-      ? path.join(__dirname, "..", "pbl", "bin", "python")
-      : path.join(process.resourcesPath, "pbl", "bin", "python");
+  const executablePath = isDevelopment
+    ? path.join(__dirname, "..", "dist", "analyze.exe")
+    : path.join(process.resourcesPath, "dist", "analyze.exe");
 
-  const scriptPath = isDevelopment
-    ? path.join(
-        __dirname,
-        // "src",
-        "8085_assembly_analyzer",
-        "src",
-        "main",
-        "analyze.py"
-      )
-    : path.join(
-        process.resourcesPath,
-        "8085_assembly_analyzer",
-        "src",
-        "main",
-        "analyze.py"
-      );
-
-  console.log("Trying to spawn Python at:", pythonExecutable);
+  console.log("Trying to spawn executable at:", executablePath);
   console.log("Passing input file path:", inputFilePath);
 
   return new Promise((resolve, reject) => {
-    const pythonProcess = spawn(pythonExecutable, [scriptPath, inputFilePath]);
+    const process = spawn(executablePath, [inputFilePath]);
 
     let output = "";
     let errorOutput = "";
 
-    pythonProcess.stdout.on("data", (data) => {
+    process.stdout.on("data", (data) => {
       output += data.toString();
     });
 
-    pythonProcess.stderr.on("data", (data) => {
+    process.stderr.on("data", (data) => {
       errorOutput += data.toString();
     });
 
-    pythonProcess.on("close", (code) => {
+    process.on("close", (code) => {
       if (code === 0) {
         resolve(output);
       } else {
-        reject(new Error(errorOutput || `Python exited with code ${code}`));
+        reject(new Error(errorOutput || `Process exited with code ${code}`));
       }
+    });
+
+    process.on("error", (err) => {
+      reject(new Error("Failed to spawn analyze.exe: " + err.message));
     });
   });
 });
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    show : false,
+    show: false,
     width: 1280,
     height: 720,
     webPreferences: {
@@ -87,7 +73,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "index.html"));
-  mainWindow.maximize(); 
+  mainWindow.maximize();
   mainWindow.show();
   if (process.env.NODE_ENV === "development") {
     mainWindow.webContents.openDevTools();
