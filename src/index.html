@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compiler-8085 Buddy</title>
+  <link rel="stylesheet" href="index.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="particles-js"></div>
+
+  <div class="glass-container">
+    <h1 class="title">Compiler-8085 Buddy</h1>
+
+    <textarea class="editor" autofocus placeholder="; Write your 8085 code here...">MOV A,B</textarea>
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
+      <button class="btn-compile">Compile</button>
+      <button class="btn-clear" >Clear Logs</button>
+    </div>
+
+    <div class="output">
+      <div class="log success">✔ [LOG] Compilation successful. No syntax errors found.</div>
+      <div class="log warning">⚠ [WARN] Unused label at line 3.</div>
+      <div class="log error">✖ [ERROR] Invalid operand at line 5.</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      particlesJS.load('particles-js', 'particles.json');
+    });
+
+  </script>
+  <script src="renderer.js"></script>
+</body>
+
+</html>
